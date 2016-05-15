@@ -1,7 +1,7 @@
 # Carto DB Notes
 
-**Username:** td-data-workshop
-**Password:** td-data-workshop
+- **Username:** td-data-workshop
+- **Password:** td-data-workshop
 
 ## Adding Datasets
 
