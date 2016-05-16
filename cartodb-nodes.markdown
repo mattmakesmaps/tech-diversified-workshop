@@ -12,11 +12,22 @@ dataset, clicking on the `Export` button will open up a drop-down of available f
 CartoDB. CartoDB will pickup the separate Lat/Lon columns and automatically georeference.
 
 For datasets stored with a "location" column on `data.seattle.gov` but no separate `lat` `lon` columns,
-You can use this workflow to import the rows into CartoDB, but will need to manually create split `lat` and `lon`
+You can use this workflow to import the dataset into CartoDB, but will need to manually create split `latitude` and `longitude`
 columns. An example of this type of dataset is the [Landmarks](https://data.seattle.gov/Community/Landmarks/7nqc-eijt)
 dataset. See the [CartoDB FAQ](https://docs.carto.pageospatial.com/faqs.html) For SQL snippets on creating split columns.
 
-Untested regex for coordinate split
+1. Add two new string type columns, `latitude` and `longitude`
+2. UPDATE these columns with values from the `data.seattle.gov` `shape` column.
 
-`/-?\d+[\.]?\d+/g`
-Try using the `regex_matches` function in See: http://www.postgresql.org/docs/9.1/static/functions-string.html
+```
+-- MK NOTE: `-?\d+[\.]?\d+` == "An optional '-' symbol, followed by 
+-- one or more digits, followed by an optional '.' symbol
+-- followed by one more more digits.
+UPDATE landmarks
+SET latitude = (regexp_matches(shape, '(-?\d+[\.]?\d+)?,\s(-?\d+[\.]?\d+)'))[1], longitude = (regexp_matches(shape, '(-?\d+[\.]?\d+)?,\s(-?\d+[\.]?\d+)'))[2]
+```
+
+3. Clicking on the `GEO` button next to the `the_geom` column allows
+you to assign lat/lon columns to be used to construct the geometry. Select
+out the columns you just populated.
+
