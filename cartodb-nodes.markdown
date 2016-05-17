@@ -5,11 +5,15 @@
 
 ## Adding Datasets
 
+**Dataset with Separate Lat/Lon Columns**
+
 CartoDB can consume links to `data.seattle.gov` **CSV** exports and **ZIP'd SHPs** directly.
 For example, for the [My Neigbhorhood Map](https://data.seattle.gov/Community/My-Neighborhood-Map/82su-5fxf)
 dataset, clicking on the `Export` button will open up a drop-down of available formats. The `CSV` link:
  (https://data.seattle.gov/api/views/82su-5fxf/rows.csv?accessType=DOWNLOAD) can be directly pasted into
 CartoDB. CartoDB will pickup the separate Lat/Lon columns and automatically georeference.
+
+**Dataset with Only a Shape or Location Column**
 
 For datasets stored with a "location" column on `data.seattle.gov` but no separate `lat` `lon` columns,
 You can use this workflow to import the dataset into CartoDB, but will need to manually create split `latitude` and `longitude`
@@ -17,7 +21,7 @@ columns. An example of this type of dataset is the [Landmarks](https://data.seat
 dataset. See the [CartoDB FAQ](https://docs.carto.pageospatial.com/faqs.html) For SQL snippets on creating split columns.
 
 1. Add two new string type columns, `latitude` and `longitude`
-2. UPDATE these columns with values from the `data.seattle.gov` `shape` column.
+2. UPDATE these columns with values from the `data.seattle.gov` `shape` or `location` column.
 
 ```
 -- MK NOTE: `-?\d+[\.]?\d+` == "An optional '-' symbol, followed by 
