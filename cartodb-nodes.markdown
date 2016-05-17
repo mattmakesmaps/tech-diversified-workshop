@@ -31,3 +31,30 @@ SET latitude = (regexp_matches(shape, '(-?\d+[\.]?\d+)?,\s(-?\d+[\.]?\d+)'))[1],
 you to assign lat/lon columns to be used to construct the geometry. Select
 out the columns you just populated.
 
+## Symbolizing Data
+
+- Use the wizard to create a categorical style map.
+- One example of this is to symbolize the `seattle_cultural_space_inventory` against the `dominant_discipline` field.
+
+## Spatial Analysis Example
+
+```
+-- Update field `cultural_inventory_cnt` with
+-- number of `seattle_cultural_space_inventory` features
+-- Insersecting It.
+UPDATE neighborhoods
+SET cultural_inventory_cnt = (
+  SELECT COUNT(seattle_cultural_space_inventory.cartodb_id)
+  FROM seattle_cultural_space_inventory
+  WHERE ST_Intersects(
+    neighborhoods.the_geom,
+    seattle_cultural_space_inventory.the_geom
+  )
+)
+
+-- Landmark Density = Count of Landmarks / Area
+UPDATE neighborhoods
+SET cultural_inventory_density = (cultural_inventory_cnt/area)*1000
+```
+
+Flipping between the `raw count` map and the `density` depicts the data in different ways. Compare small neighborhoods to large neighborhoods for example.
