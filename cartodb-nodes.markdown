@@ -38,6 +38,12 @@ out the columns you just populated.
 
 ## Spatial Analysis Example
 
+An example creating a map using the `neighborhoods` and `seattle_cultural_inventory_dataset`.
+
+Create two fields: A raw count of feature intersecting a neighborhood, and a density calculation.
+
+Flipping between the `raw count` map and the `density` depicts the data in different ways. Compare small neighborhoods to large neighborhoods for example.
+
 ```
 -- Update field `cultural_inventory_cnt` with
 -- number of `seattle_cultural_space_inventory` features
@@ -56,5 +62,3 @@ SET cultural_inventory_cnt = (
 UPDATE neighborhoods
 SET cultural_inventory_density = (cultural_inventory_cnt/area)*1000
 ```
-
-Flipping between the `raw count` map and the `density` depicts the data in different ways. Compare small neighborhoods to large neighborhoods for example.
