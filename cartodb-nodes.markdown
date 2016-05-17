@@ -66,3 +66,41 @@ SET cultural_inventory_cnt = (
 UPDATE neighborhoods
 SET cultural_inventory_density = (cultural_inventory_cnt/area)*1000
 ```
+
+Another example showing new construction permits by neighborhood.
+
+- Create a new map selecting the `neighborhoods` and `building_permits_current` layers.
+- From the data view filter the `building_permits_current` layer to constrain:
+  - `action_type` == `new`
+  - `category` attribute to include only `SINGLE FAMILY/DUPLEX` and `MULTIFAMILY`
+- Note how the `sql` pane of the `building_permit_current` table now has custom sql matching our filters
+
+```sql
+SELECT * FROM building_permits_current
+WHERE action_type IN ('NEW') 
+  AND action_type IS NOT NULL
+AND category IN ('SINGLE FAMILY / DUPLEX','MULTIFAMILY') 
+  AND category IS NOT NULL
+```
+
+- Add two new columns to `neighborhoods` dataset `bld_permit_cnt` and `bld_permit_density`.
+
+Calculate
+```sql
+UPDATE neighborhoods
+SET bld_permit_cnt = (
+  SELECT COUNT(building_permits_current.cartodb_id)
+  FROM building_permits_current
+  WHERE ST_Intersects(
+    neighborhoods.the_geom,
+    building_permits_current.the_geom
+  ) 
+  -- APPLY Building Permit Filters
+  AND action_type IN ('NEW') AND action_type IS NOT NULL
+  AND category IN ('SINGLE FAMILY / DUPLEX','MULTIFAMILY') AND category IS NOT NULL
+)
+
+-- Density = Count / Area
+UPDATE neighborhoods
+SET bld_permit_density = (bld_permit_cnt/area)*1000
+```
