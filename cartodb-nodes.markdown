@@ -104,3 +104,67 @@ SET bld_permit_cnt = (
 UPDATE neighborhoods
 SET bld_permit_density = (bld_permit_cnt/area)*1000
 ```
+
+## Bus Stops Related to POIs
+
+**Question:** What bus stops have the largest number of "places of interest"
+  (ammenities such as shops, resturants, schools, places of worship etc).
+  within a mile?
+
+### Sourcing Data
+
+- `data.seattle.gov` actually doesn't contain datasets for either places
+  of interest or bus stops/bus routes.
+- Point of Interest and Bus Stop data available from [Mapzen
+  Metro Extracts](https://mapzen.com/data/metro-extracts/)
+- `OSM2PGSQL SHP` format contains more easy to access points
+  of interest data (businesses, schools, places of worship, etc).
+- `IMPOSM SHP` has easier to access bus stop information.
+
+- The bounding box (extent) for the Seattle area is really large, so
+  I've subset the data here: (https://github.com/mattmakesmaps/tech-diversified-workshop)
+- Import `imposm_transportation_stuff.zip`, `osm_points.zip`, `osm_lines.zip`, and `osm_polys.zip` by copying and pasting the following links into
+ - https://github.com/mattmakesmaps/tech-diversified-workshop/raw/master/imposm_transportation_stuff.zip
+ - https://github.com/mattmakesmaps/tech-diversified-workshop/raw/master/osm_points.zip
+ - https://github.com/mattmakesmaps/tech-diversified-workshop/raw/master/osm_lines.zip
+ - https://github.com/mattmakesmaps/tech-diversified-workshop/raw/master/osm_polys.zip
+
+### Filtering Data
+
+Looking at the `seattle_imposm_transport_points` dataset, we can see
+that it contains many different types of features in the `type`
+attribute. Since our question only revolves around bus stops, let's
+filter this dataset to include only bus stops.
+
+- In the data view for thsi dataset, click on the `type` attribute and
+  select `filter by this column`.
+- Select `clear selection` to null out all distinct type values.
+- select `bus_stop` to filter this dataset to bus stops exclusively.
+
+The `osm_points` dataset contains too many rows for cartodb to provide
+a filter list, so we needto use SQL to filter the data.
+
+To subset the `osm_points` dataset to any features that have a populated
+`shop` or `amenity` column, use the following SQL
+
+```sql
+SELECT * FROM osm_points
+WHERE shop IS NOT NULL
+OR amenity IS NOT NULL
+```
+
+### Perform Analysis
+
+Create a new map in CartoDB, and select the `seattle_imposm_transport_points`
+and `osm_points` datasets to be included.
+
+Our analysis will revolve around getting a count of ammentiy/shop points
+in the `osm_points` dataset that are within a 1-mile radius of a bus stop.
+In order to store the results of our analysis we'll need to add a new
+column to `seattle_imposm_trasnport_points` called `poi_cnt`.
+
+- Select the `seattle_imposm_transport_points` dataset and click the
+`add column` button. Name the column `poi_cnt` and give it a data type
+of number.
+
+TODO: UPDATE `poi_cnt` with results of query `Count of all POIs from OSM_POINTS within a 1-mile buffer of all seattle_imposm_transport_points` features.
