@@ -167,4 +167,16 @@ column to `seattle_imposm_trasnport_points` called `poi_cnt`.
 `add column` button. Name the column `poi_cnt` and give it a data type
 of number.
 
-TODO: UPDATE `poi_cnt` with results of query `Count of all POIs from OSM_POINTS within a 1-mile buffer of all seattle_imposm_transport_points` features.
+--TODO:
+--find out what unit of measure the buffer is operating on.
+--"create new datasets" to filter out osm points to just amenity and shop values.
+--
+
+SELECT id, COUNT(*)
+FROM seattle_imposm_transport_points AS stops
+INNER JOIN osm_points AS pois
+ON ST_Intersects(pois.the_geom, ST_Buffer(stops.the_geom, 0.0005)) = TRUE
+WHERE stops.type = 'bus_stop'
+GROUP BY stops.id
+
+
