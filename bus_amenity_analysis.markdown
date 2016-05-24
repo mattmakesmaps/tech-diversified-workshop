@@ -3,7 +3,7 @@
 Objective: Let's find bus stops that have a large amount of
 amenities within a half-kilometer radius.
 
-We'll be making a map similar to this: (https://td-data-workshop.cartodb.com/viz/67413342-2174-11e6-9958-0ecfd53eb7d3/public_map)
+We'll be making a map similar to this: https://td-data-workshop.cartodb.com/viz/67413342-2174-11e6-9958-0ecfd53eb7d3/public_map
 
 ## Sourcing Data
 
@@ -20,8 +20,8 @@ We'll be making a map similar to this: (https://td-data-workshop.cartodb.com/viz
 
 
 - Import `imposm_transportation_stuff.zip`, `osm_points.zip`, `osm_lines.zip`, and `osm_polys.zip` by copying and pasting the following links into cartodb.
-- (https://github.com/mattmakesmaps/tech-diversified-workshop/raw/master/imposm_transportation_stuff.zip)
-- (https://github.com/mattmakesmaps/tech-diversified-workshop/raw/master/osm_points.zip)
+- https://github.com/mattmakesmaps/tech-diversified-workshop/raw/master/imposm_transportation_stuff.zip
+- https://github.com/mattmakesmaps/tech-diversified-workshop/raw/master/osm_points.zip
 
 ## Explore the data
 
@@ -121,7 +121,7 @@ FROM (
 ) AS poi_count
 WHERE bus_stops.id = poi_count.id
 
-# Making the Map
+## Making the Map
 
 Now that we have the data prepared, we can focus on styling the map
 to glean information from the data.
@@ -143,7 +143,7 @@ to glean information from the data.
   example of useful filtering would be to remove bus stops that
   don't contain any POIs within a 500m radius.
 
-# Additional Questions
+## Additional Questions
 
 Now that we know the counts of POIs around all our bus stops, let's
 ask the question, "What specific POIs are around a particular bus stop?"
