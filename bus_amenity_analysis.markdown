@@ -3,6 +3,8 @@
 Objective: Let's find bus stops that have a large amount of
 amenities within a half-kilometer radius.
 
+We'll be making a map similar to this: (https://td-data-workshop.cartodb.com/viz/67413342-2174-11e6-9958-0ecfd53eb7d3/public_map)
+
 ## Sourcing Data
 
 - `data.seattle.gov` actually doesn't contain datasets for either places
