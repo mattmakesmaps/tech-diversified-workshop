@@ -174,9 +174,46 @@ of number.
 
 SELECT id, COUNT(*)
 FROM seattle_imposm_transport_points AS stops
-INNER JOIN osm_points AS pois
+INNER JOIN osm_pints AS pois
 ON ST_Intersects(pois.the_geom, ST_Buffer(stops.the_geom, 0.0005)) = TRUE
 WHERE stops.type = 'bus_stop'
 GROUP BY stops.id
 
+-- SLOW
+SELECT id, COUNT(*)
+FROM seattle_imposm_transport_points_bus_stops AS stops
+INNER JOIN osm_points_amenities_shops AS pois
+ON ST_Intersects(
+  pois.the_geom::geography,
+  ST_Buffer(stops.the_geom::geography, 100)) = TRUE
+GROUP BY stops.id
 
+-- FAST
+SELECT stops.id, COUNT(*)
+FROM osm_points_amenities_shops AS pois
+INNER JOIN seattle_imposm_transport_points_bus_stops AS stops
+ON ST_DWITHIN(
+  pois.the_geom::geography,
+  stops.the_geom::geography,
+  500)
+GROUP BY stops.id
+
+-- UPDATE
+UPDATE seattle_imposm_transport_points_bus_stops
+SET poi_count = poi_count.count
+FROM (
+  SELECT stops.id, COUNT(*)
+  FROM osm_points_amenities_shops AS pois
+  INNER JOIN seattle_imposm_transport_points_bus_stops AS stops
+  ON ST_DWITHIN(
+    pois.the_geom::geography,
+    stops.the_geom::geography,
+    500)
+  GROUP BY stops.id
+) AS poi_count
+WHERE seattle_imposm_transport_points_bus_stops.id = poi_count.id
+
+Things to do after updating the data:
+- Add infowindows
+- COnvert POIs to cluster or heatmap.
+- Add classified ramp to stops dataset based on POI count.
