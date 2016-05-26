@@ -67,7 +67,6 @@ Not all datasets will be used, but these are cool.
 
 - Show examples of a few basic spatial operations:
   - Features from dataset `A` within a buffer `n` from features in dataset `B`.
-- **OTHER MEAT AN TATERS GO HERE**
 
 ## Resources for participants in Tech Diversified Repo
 

@@ -1,8 +1,5 @@
 # Carto DB Notes
 
-- **Username:** td-data-workshop
-- **Password:** td-data-workshop
-
 ## Adding Datasets
 
 **Dataset with Separate Lat/Lon Columns**
@@ -24,11 +21,16 @@ dataset. See the [CartoDB FAQ](https://docs.carto.pageospatial.com/faqs.html) Fo
 2. UPDATE these columns with values from the `data.seattle.gov` `shape` or `location` column.
 
 ```
--- MK NOTE: `-?\d+[\.]?\d+` == "An optional '-' symbol, followed by 
+-- NOTE: `-?\d+[\.]?\d+` == "An optional '-' symbol, followed by 
 -- one or more digits, followed by an optional '.' symbol
 -- followed by one more more digits.
 UPDATE landmarks
-SET latitude = (regexp_matches(shape, '(-?\d+[\.]?\d+)?,\s(-?\d+[\.]?\d+)'))[1], longitude = (regexp_matches(shape, '(-?\d+[\.]?\d+)?,\s(-?\d+[\.]?\d+)'))[2]
+SET latitude = (
+    regexp_matches(shape, '(-?\d+[\.]?\d+)?,\s(-?\d+[\.]?\d+)')
+    )[1],
+  longitude = (
+    regexp_matches(shape, '(-?\d+[\.]?\d+)?,\s(-?\d+[\.]?\d+)')
+    )[2]
 ```
 
 3. Clicking on the `GEO` button next to the `the_geom` column allows
