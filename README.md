@@ -10,7 +10,7 @@ Additional (maybe helpful) notes on using CartoDB can be found [here](cartodb-no
 
 ## Sites Built Using Seattle Open Data
 
-The following website use data from http://data.seattle.gov
+The following websites use data from http://data.seattle.gov
 
 - [Open Budget Seattle](http://openbudget.seattle.gov/#!/year/default)
 - [Capital Projects Explorer](https://capitalprojects.seattle.gov/#/)
