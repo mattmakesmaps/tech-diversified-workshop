@@ -8,6 +8,15 @@ can be found [here](bus_amenity_analysis.markdown).
 
 Additional (maybe helpful) notes on using CartoDB can be found [here](cartodb-notes.markdown)
 
+## Sites Built Using Seattle Open Data
+
+The following website use data from http://data.seattle.gov
+
+- [Open Budget Seattle](http://openbudget.seattle.gov/#!/year/default)
+- [Capital Projects Explorer](https://capitalprojects.seattle.gov/#/)
+- [Performance Seattle](https://performance.seattle.gov)
+- [SPD Crime Maps](http://www.seattle.gov/seattle-police-department/crime-data/online-crime-maps)
+
 ## Data Sources
 
 ### data.seattle.gov
