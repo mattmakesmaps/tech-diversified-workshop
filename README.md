@@ -8,6 +8,13 @@ can be found [here](bus_amenity_analysis.markdown).
 
 Additional (maybe helpful) notes on using CartoDB can be found [here](cartodb-notes.markdown)
 
+## Seattle GIS and Open Data Groups
+
+- [Cascadia Users of Geospatial Open Source (CUGOS)](http://cugos.org/)
+- [Maptime Seattle](http://www.meetup.com/MaptimeSEA/)
+- [Seattle OpenStreetMap (OSM)](http://www.meetup.com/OpenStreetMap-Seattle/)
+- [Open Seattle](http://www.meetup.com/openseattle/)
+
 ## Sites Built Using Seattle Open Data
 
 The following websites use data from http://data.seattle.gov
